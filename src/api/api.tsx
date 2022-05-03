@@ -1,7 +1,5 @@
 import Axios, { AxiosRequestConfig } from "axios";
-import { PublicUser, Roadmap } from "../types";
-import { UserInfo } from "../types";
-import { Version } from "../types";
+import { PublicUser, Roadmap, UserInfo, Version, Task } from "../types";
 
 /* 
   A new authorization key needs to be fetched from server each time it is restarted:
@@ -26,6 +24,11 @@ const getRoadmap = async () => {
   return response.data[0] as Roadmap;
 };
 
+const getTasks = async (roadmapId: number) => {
+  const tasks = await axios.get(`/roadmaps/${roadmapId}/tasks?eager=1`);
+  return tasks.data as Task[];
+};
+
 const getCurrentUserInfo = async () => {
   const response = await axios.get(`/users/whoami`);
   return response.data as UserInfo;
@@ -43,6 +46,7 @@ const getVersions = async (roadmap: Roadmap) => {
 
 export const api = {
   getRoadmap,
+  getTasks,
   getCurrentUserInfo,
   getPublicUsers,
   getVersions,

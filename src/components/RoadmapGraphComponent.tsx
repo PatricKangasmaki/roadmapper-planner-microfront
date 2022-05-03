@@ -33,11 +33,7 @@ export const RoadmapGraphComponent: React.FC<{
               versions &&
               versions?.map((ver) => {
                 const numTasks = ver.tasks.length;
-                const versionTasks = ver.tasks.map(
-                  (taskId) =>
-                    roadmap.tasks.find((task) => task.id === taskId.id)!
-                );
-                const { value, work } = totalValueAndWork(versionTasks);
+                const { value, work } = totalValueAndWork(ver.tasks);
 
                 const w = Math.max(100, 60 * (work / 5));
                 const h = Math.max(90, 50 * (value / 5));

@@ -17,13 +17,10 @@ export const TaskValueComponent: React.FC<{
 }> = ({ version, roadmap, publicUsers }) => {
   let totalValue = 0;
   const customerStakes = new Map<PublicUser, number>();
-  const versionTasks = version.tasks.map((taskId) =>
-    roadmap?.tasks.find((task) => task.id === taskId.id)
-  );
 
   // Calculate total sum of task values in the milestone
   // And map values of how much each user has rated in these tasks
-  versionTasks.forEach((task) => {
+  version.tasks.forEach((task) => {
     totalValue += calcTaskValueSum(task!) || 0;
     if (task == null) return;
 
@@ -49,6 +46,13 @@ export const TaskValueComponent: React.FC<{
     });
     index += 1;
   });
+
+  if (data.length === 0)
+    data.push({
+      name: "No value ratings given",
+      value: 4,
+      color: "#D3D3D3",
+    });
 
   return (
     <div className={css.container}>

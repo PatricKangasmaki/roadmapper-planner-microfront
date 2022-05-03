@@ -12,7 +12,8 @@ export const GraphInterface = () => {
 
   const fetchRoadmaps = async () => {
     const firstRoadmap = await api.getRoadmap();
-    setRoadmap(firstRoadmap);
+    const tasks = await api.getTasks(firstRoadmap.id);
+    setRoadmap({ ...firstRoadmap, tasks: tasks });
   };
 
   const fetchVersions = async (roadmap: Roadmap) => {
